@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="All Test Suite" duration-ms="87392" started-at="2022-05-21T03:24:26 YEKT" finished-at="2022-05-21T03:25:53 YEKT">
+    <groups>
+    </groups>
+    <test name="C:/Users/User/IdeaProjects/Clone2" duration-ms="87392" started-at="2022-05-21T03:24:26 YEKT" finished-at="2022-05-21T03:25:53 YEKT">
+      <class name="YandexTest">
+        <test-method status="PASS" signature="setup()[pri:0, instance:YandexTest@481e91b6]" name="setup" is-config="true" duration-ms="13641" started-at="2022-05-21T03:24:26 YEKT" finished-at="2022-05-21T03:24:40 YEKT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="yandexmark()[pri:0, instance:YandexTest@481e91b6]" name="yandexmark" duration-ms="72917" started-at="2022-05-21T03:24:40 YEKT" finished-at="2022-05-21T03:25:53 YEKT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- yandexmark -->
+        <test-method status="PASS" signature="down()[pri:0, instance:YandexTest@481e91b6]" name="down" is-config="true" duration-ms="701" started-at="2022-05-21T03:25:53 YEKT" finished-at="2022-05-21T03:25:53 YEKT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- down -->
+      </class> <!-- YandexTest -->
+    </test> <!-- C:/Users/User/IdeaProjects/Clone2 -->
+  </suite> <!-- All Test Suite -->
+</testng-results>
