@@ -24,7 +24,7 @@ public class ProductPage {
         this.driver = driver;
     }
 
-    @FindBy(xpath = "/html[1]/body[1]/div[3]/div[4]/div[1]/div[4]/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]")
+    @FindBy(xpath = "//div[@class='_1FODI']")
     private WebElement braveness;
 
     @FindBy(xpath = "//a[contains(text(),'Сравнить')]")
@@ -38,9 +38,11 @@ public class ProductPage {
 
     @Step("Товар добавляется в сравнение")
     public void buttonCompare() throws InterruptedException {
-        Thread.sleep(2000);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(braveness).build().perform();
+        Thread.sleep(1000);
         braveness.click();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
     }
 
     @Step("Переход на страницу первого товара")

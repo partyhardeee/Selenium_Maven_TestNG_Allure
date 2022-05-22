@@ -1,9 +1,14 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.annotations.Step;
+
+import java.time.Duration;
 
 public class FilterPage {
     public WebDriver driver;
@@ -53,20 +58,28 @@ public class FilterPage {
     @Step("Устанавливается фильтр по цене и выбирается производитель")
     public void sendFiltr() throws InterruptedException {
         Actions actions = new Actions(driver);
-        Thread.sleep(4000);
-        actions.moveToElement(dreamiz).build().perform();
-        Thread.sleep(2000);
-        dreamiz.click();
         Thread.sleep(3000);
-        actions.moveToElement(pole1).build().perform();
-        pole1.click();
-        pole1.sendKeys("150");
-        pole2.click();
-        pole2.sendKeys("350");
-        Thread.sleep(2000);
-        actions.moveToElement(check).build().perform();
-        check.click();
-        Thread.sleep(2000);
+        if(dreamiz.isDisplayed()){
+        actions.moveToElement(dreamiz).build().perform();
+        Thread.sleep(1000);
+        dreamiz.click();}
+        else {
+            WebElement element1 = (new WebDriverWait(driver, Duration.ofSeconds(20))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[.='Dreamies']//span[@class='_2XaWK']"))));
+            actions.moveToElement(dreamiz).build().perform();
+            dreamiz.click();}
+
+                Thread.sleep(3000);
+            actions.moveToElement(pole1).build().perform();
+            pole1.click();
+            pole1.sendKeys("150");
+            pole2.click();
+            pole2.sendKeys("350");
+                Thread.sleep(2000);
+
+            actions.moveToElement(check).build().perform();
+            check.click();
+                Thread.sleep(2000);
 
     }
     @Step("Выбор другого продукта")
