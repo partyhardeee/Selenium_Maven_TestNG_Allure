@@ -15,7 +15,7 @@ public class YandexTest {
     public static WebDriver driver;
 
     @BeforeClass
-    public static void setup() throws InterruptedException {
+    public static void setup() {
         System.setProperty("webdriver.chrome.driver","C:\\Driver\\chromedriver.exe");
         driver = new ChromeDriver();
         ProductPage = new ProductPage(driver);
@@ -25,7 +25,7 @@ public class YandexTest {
         WebElement element = (new WebDriverWait(driver, Duration.ofSeconds(20))
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='_1SD7T'][contains(text(),'Маркет')]"))));}
     @Test
-    public void yandexmark() throws InterruptedException {
+    public void yandexmark(){
         filter.findingForm();
         filter.sendFiltr();
         ProductPage.firstPick();
@@ -42,7 +42,10 @@ public class YandexTest {
         ProductPage.checkAll(); }
     @AfterClass
     public static void down()
-    { driver.quit();}}
+    {
+        driver.quit();
+    }
+}
 
 
 

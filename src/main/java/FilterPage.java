@@ -39,61 +39,62 @@ public class FilterPage {
     private WebElement input;
 
     @FindBy(xpath = "//span[contains(text(),'Зоотовары')]")
-    private WebElement Zoo;
+    private WebElement zoo;
 
     @FindBy(xpath = "//a[@href='/catalog--lakomstva-dlia-koshek/62819/list?hid=15963668']")
     private WebElement lakomstva;
 
 
     @Step("Открытие страницы - Лакомства")
-    public void findingForm() throws InterruptedException {
+    public void findingForm(){
         Actions actions = new Actions(driver);
+        WebElement element1 = (new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOf(input)));
         input.click();
-        Thread.sleep(2000);
-        actions.moveToElement(Zoo).build().perform();
+        WebElement element2 = (new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOf(zoo)));
+        actions.moveToElement(zoo).build().perform();
         lakomstva.click();
-        Thread.sleep(2000);
     }
 
     @Step("Устанавливается фильтр по цене и выбирается производитель")
-    public void sendFiltr() throws InterruptedException {
+    public void sendFiltr(){
         Actions actions = new Actions(driver);
-        Thread.sleep(3000);
+        WebElement element1 = (new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOf(dreamiz)));
         if(dreamiz.isDisplayed()){
-        actions.moveToElement(dreamiz).build().perform();
-        Thread.sleep(1000);
-        dreamiz.click();}
-        else {
-            WebElement element1 = (new WebDriverWait(driver, Duration.ofSeconds(20))
-                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[.='Dreamies']//span[@class='_2XaWK']"))));
             actions.moveToElement(dreamiz).build().perform();
             dreamiz.click();}
-
-                Thread.sleep(3000);
+        else {
+            WebElement element2 = (new WebDriverWait(driver, Duration.ofSeconds(20))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[.='Dreamies']//span[@class='_2XaWK']"))));
+            actions.moveToElement(dreamiz).build().perform();
+            dreamiz.click();
+        }
+            WebElement element3 = (new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOf(pole1)));
             actions.moveToElement(pole1).build().perform();
             pole1.click();
             pole1.sendKeys("150");
             pole2.click();
             pole2.sendKeys("350");
-                Thread.sleep(2000);
-
+            WebElement element4 = (new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOf(check)));
             actions.moveToElement(check).build().perform();
             check.click();
-                Thread.sleep(2000);
-
     }
-    @Step("Выбор другого продукта")
-    public void unchecknCheck() throws InterruptedException {
-        Actions actions = new Actions(driver);
 
+    @Step("Выбор другого продукта")
+    public void unchecknCheck(){
+        Actions actions = new Actions(driver);
+        WebElement element1 = (new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOf(dreamiz)));
         actions.moveToElement(dreamiz).build().perform();
-        Thread.sleep(2000);
         dreamiz.click();
-        Thread.sleep(2000);
+        WebElement element2 = (new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOf(checkveda)));
         actions.moveToElement(checkveda).build().perform();
-        Thread.sleep(2000);
         checkveda.click();
-        Thread.sleep(3000);
     }
 
 }
