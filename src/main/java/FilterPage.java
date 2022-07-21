@@ -6,17 +6,20 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.yandex.qatools.allure.annotations.Step;
-
 import java.time.Duration;
+import io.qameta.allure.Step;
 
 public class FilterPage {
     public WebDriver driver;
+    public static WebDriverWait wait;
     public FilterPage(WebDriver driver) {
 
         PageFactory.initElements(driver, this);
         this.driver = driver;
+        wait = new WebDriverWait(driver, 10);
+
     }
+
     @FindBy(xpath = "//span[@data-auto='filter-range-min']//input")
     private WebElement pole1;
 
@@ -48,53 +51,50 @@ public class FilterPage {
     @Step("Открытие страницы - Лакомства")
     public void findingForm(){
         Actions actions = new Actions(driver);
-        WebElement element1 = (new WebDriverWait(driver, Duration.ofSeconds(20))
-                .until(ExpectedConditions.visibilityOf(input)));
+        wait.until(ExpectedConditions.visibilityOf(input));
         input.click();
-        WebElement element2 = (new WebDriverWait(driver, Duration.ofSeconds(20))
-                .until(ExpectedConditions.visibilityOf(zoo)));
+        wait.until(ExpectedConditions.visibilityOf(zoo));
         actions.moveToElement(zoo).build().perform();
         lakomstva.click();
     }
 
     @Step("Устанавливается фильтр по цене и выбирается производитель")
-    public void sendFiltr(){
+    public void sendFiltr(String lowprice, String highprice) throws InterruptedException {
         Actions actions = new Actions(driver);
-        WebElement element1 = (new WebDriverWait(driver, Duration.ofSeconds(20))
-                .until(ExpectedConditions.visibilityOf(dreamiz)));
-        if(dreamiz.isDisplayed()){
-            actions.moveToElement(dreamiz).build().perform();
-            dreamiz.click();}
-        else {
-            WebElement element2 = (new WebDriverWait(driver, Duration.ofSeconds(20))
-                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[.='Dreamies']//span[@class='_2XaWK']"))));
+        wait.until(ExpectedConditions.visibilityOf(dreamiz));
+
+        if  (dreamiz.isDisplayed()) {
             actions.moveToElement(dreamiz).build().perform();
             dreamiz.click();
-        }
-            WebElement element3 = (new WebDriverWait(driver, Duration.ofSeconds(20))
-                .until(ExpectedConditions.visibilityOf(pole1)));
+            }
+        else {
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[.='Dreamies']//span[@class='_2XaWK']")));
+            actions.moveToElement(dreamiz).build().perform();
+            dreamiz.click();
+            }
+            wait.until(ExpectedConditions.visibilityOf(pole1));
             actions.moveToElement(pole1).build().perform();
             pole1.click();
-            pole1.sendKeys("150");
+            pole1.sendKeys(lowprice);
             pole2.click();
-            pole2.sendKeys("350");
-            WebElement element4 = (new WebDriverWait(driver, Duration.ofSeconds(20))
-                .until(ExpectedConditions.visibilityOf(check)));
+            pole2.sendKeys(highprice);
+
+            wait.until(ExpectedConditions.visibilityOf(check));
             actions.moveToElement(check).build().perform();
             check.click();
+            Thread.sleep(2000);
     }
 
     @Step("Выбор другого продукта")
-    public void unchecknCheck(){
+    public void unchecknCheck() throws InterruptedException {
         Actions actions = new Actions(driver);
-        WebElement element1 = (new WebDriverWait(driver, Duration.ofSeconds(20))
-                .until(ExpectedConditions.visibilityOf(dreamiz)));
+        wait.until(ExpectedConditions.visibilityOf(dreamiz));
         actions.moveToElement(dreamiz).build().perform();
         dreamiz.click();
-        WebElement element2 = (new WebDriverWait(driver, Duration.ofSeconds(20))
-                .until(ExpectedConditions.visibilityOf(checkveda)));
+        wait.until(ExpectedConditions.visibilityOf(checkveda));
         actions.moveToElement(checkveda).build().perform();
         checkveda.click();
+        Thread.sleep(2000);
     }
 
 }
