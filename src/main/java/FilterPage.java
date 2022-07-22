@@ -62,16 +62,15 @@ public class FilterPage {
     public void sendFiltr(String lowprice, String highprice) throws InterruptedException {
         Actions actions = new Actions(driver);
         wait.until(ExpectedConditions.visibilityOf(dreamiz));
-
-        if  (dreamiz.isDisplayed()) {
-            actions.moveToElement(dreamiz).build().perform();
-            dreamiz.click();
-            }
-        else {
+            /*
+            Выбор производителя
+             */
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[.='Dreamies']//span[@class='_2XaWK']")));
             actions.moveToElement(dreamiz).build().perform();
             dreamiz.click();
-            }
+            /*
+            Фильтр по цене
+             */
             wait.until(ExpectedConditions.visibilityOf(pole1));
             actions.moveToElement(pole1).build().perform();
             pole1.click();
@@ -88,9 +87,15 @@ public class FilterPage {
     @Step("Выбор другого продукта")
     public void unchecknCheck() throws InterruptedException {
         Actions actions = new Actions(driver);
+        /*
+        Чек бокс снимается с Dreamiz
+         */
         wait.until(ExpectedConditions.visibilityOf(dreamiz));
         actions.moveToElement(dreamiz).build().perform();
         dreamiz.click();
+        /*
+        Чек бокс проставляется на другого производителя
+         */
         wait.until(ExpectedConditions.visibilityOf(checkveda));
         actions.moveToElement(checkveda).build().perform();
         checkveda.click();

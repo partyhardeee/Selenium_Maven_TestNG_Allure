@@ -45,6 +45,9 @@ public class YandexTest {
 
 
     private WebDriver getDriver() {
+        /*
+        Не получается сделать путь к драйверу начиная с папки проекта
+         */
         System.setProperty("webdriver.chrome.driver","C:\\Users\\User\\IdeaProjects\\Selenium_Maven_TestNG_Allure\\chromedriver.exe");
         return driver = new ChromeDriver();
     }

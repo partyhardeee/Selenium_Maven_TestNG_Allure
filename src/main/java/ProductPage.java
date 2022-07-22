@@ -62,6 +62,9 @@ public class ProductPage {
         window1 = driver.getWindowHandle();
         wait.until(ExpectedConditions.visibilityOf(firstpack));
         firstpack.click();
+        /*
+        Переход на другую страницу, без цикла переход не производился
+         */
         Set<String> currentWindows = driver.getWindowHandles();
         for (String window : currentWindows) {
             if (!window.equals(window1)) {
@@ -102,6 +105,9 @@ public class ProductPage {
 
     @Step("Проверка суммы двух товаров и отображения выбранных продуктов на странице")
     public void assertPrice(){
+        /*
+        Берутся строки с ценами и преобразуются в int
+         */
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html[1]/body[1]/div[4]/div[3]/div[2]/div[1]/div[4]/div[1]/div[1]/div[1]")));
         String firstprice = driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[3]/div[2]/div[1]/div[4]/div[1]/div[1]/div[1]")).getText();
         String secprice = driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[3]/div[2]/div[1]/div[4]/div[1]/div[2]/div[1]/span[1]/span[1]")).getText();
@@ -145,7 +151,7 @@ public class ProductPage {
         catch (NoSuchElementException e)
         {
             e.printStackTrace();
-            System.err.println("Dreamies удален");
+            System.err.println("Dreamiz удален");
         }
     }
     @Step("Проверка того, что все товары удалены из корзины")
