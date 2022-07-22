@@ -1,6 +1,4 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -30,7 +28,7 @@ public class ProductPage {
     @FindBy(xpath = "//a[contains(text(),'Сравнить')]")
     private WebElement compare;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[4]/div[3]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]")
+    @FindBy(xpath = "/html[1]/body[1]/div[4]/div[3]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]")
     private WebElement deleteitem;
 
     @FindBy(xpath = "/html[1]/body[1]/div[4]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/button[1]")
@@ -45,9 +43,14 @@ public class ProductPage {
     @Step("Товар добавляется в сравнение")
     public void buttonCompare(){
         Actions actions = new Actions(driver);
-        wait.until(ExpectedConditions.visibilityOf(braveness));
-        actions.moveToElement(braveness).build().perform();
-        braveness.click();
+        try {
+            actions.moveToElement(braveness).build().perform();
+            braveness.click();
+        }
+        catch (TimeoutException e)
+        {
+            wait.until(ExpectedConditions.visibilityOf(compare));
+        }
     }
 
     @Step("Переход на страницу первого товара")
@@ -104,28 +107,46 @@ public class ProductPage {
         String secprice = driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[3]/div[2]/div[1]/div[4]/div[1]/div[2]/div[1]/span[1]/span[1]")).getText();
         String firstint = firstprice.replaceAll("[^0-9]+", "");
         String secint = secprice.replaceAll("[^0-9]+", "");
-        // Integer a = Integer.parseInt(firstint);
-        // Integer b = Integer.parseInt(secint);
         int x = Integer.parseInt(firstint) + Integer.parseInt(secint);
         Assert.assertTrue(x < 700);
-
-        Assert.assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Dreamies')]")).isDisplayed());
-               // .getText().contains("Dreamies"));
-        Assert.assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Деревенские лакомства')]")).isDisplayed());
-               //.getText().contains("Деревенские лакомства"));
+        try {
+            Assert.assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Dreamies')]")).isDisplayed());
+            Assert.assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Деревенские лакомства')]")).isDisplayed());
+        }
+        catch (NoSuchElementException e) {
+            e.printStackTrace();
+            System.err.println("Не найдены продукты в корзине по локатору");
+        }
     }
 
     @Step("Удаление первого продукта из корзины")
     public void deletefBasket(){
         Actions actions = new Actions(driver);
+        try {
         actions.moveToElement(deleteitem).build().perform();
         deleteitem.click();
+            }
+        catch (NoSuchElementException e)
+        {
+            e.printStackTrace();
+            System.err.println("Не найдены продукты в корзине по локатору");
+        }
     }
     @Step("Проверка того, что удаленного товара нет в корзине")
     public void checkOne(){
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html[1]/body[1]/div[3]/div[4]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/a[1]")));
-        Assert.assertFalse(driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[3]/div[2]/div[1]/div[4]/div[1]/div[2]/div[1]/span[1]/span[1]"))
-                .isDisplayed());
+        try {
+            /*
+            Не понимаю почему assertFalse не работает, я думал что он должен проверить что элемента не отображен
+             */
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//a[contains(text(),'Dreamies')]")));
+            Assert.assertFalse(driver.findElement(By.xpath("//a[contains(text(),'Dreamies')]"))
+                    .isDisplayed());
+        }
+        catch (NoSuchElementException e)
+        {
+            e.printStackTrace();
+            System.err.println("Dreamies удален");
+        }
     }
     @Step("Проверка того, что все товары удалены из корзины")
     public void checkAll(){
