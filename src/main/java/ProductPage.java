@@ -51,6 +51,9 @@ public class ProductPage {
         {
             wait.until(ExpectedConditions.visibilityOf(compare));
         }
+        catch (NoSuchElementException e){
+            wait.until(ExpectedConditions.visibilityOf(compare));
+        }
     }
 
     @Step("Переход на страницу первого товара")
@@ -143,6 +146,7 @@ public class ProductPage {
         try {
             /*
             Не понимаю почему assertFalse не работает, я думал что он должен проверить что элемента не отображен
+            Пришлось использовать try catch в таком виде, но наверно это не правильно
              */
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//a[contains(text(),'Dreamies')]")));
             Assert.assertFalse(driver.findElement(By.xpath("//a[contains(text(),'Dreamies')]"))
@@ -150,7 +154,6 @@ public class ProductPage {
         }
         catch (NoSuchElementException e)
         {
-            e.printStackTrace();
         }
     }
     @Step("Проверка того, что все товары удалены из корзины")
