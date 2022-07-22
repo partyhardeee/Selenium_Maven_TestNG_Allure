@@ -62,15 +62,15 @@ public class FilterPage {
     public void sendFiltr(String lowprice, String highprice) throws InterruptedException {
         Actions actions = new Actions(driver);
         wait.until(ExpectedConditions.visibilityOf(dreamiz));
-            /*
-            Выбор производителя
-             */
+        if  (dreamiz.isDisplayed()) {
+            actions.moveToElement(dreamiz).build().perform();
+            dreamiz.click();
+            }
+        else {
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[.='Dreamies']//span[@class='_2XaWK']")));
             actions.moveToElement(dreamiz).build().perform();
             dreamiz.click();
-            /*
-            Фильтр по цене
-             */
+            }
             wait.until(ExpectedConditions.visibilityOf(pole1));
             actions.moveToElement(pole1).build().perform();
             pole1.click();

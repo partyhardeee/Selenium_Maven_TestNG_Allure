@@ -3,7 +3,7 @@
 
 
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="IdeaProjects\Selenium_Maven_TestNG_Allure\">
+    <test verbose="2" preserve-order="true" name="IdeaProjects\Selenium_Maven_TestNG_Allure">
         <classes>
             <class name="YandexTest"></class>
         </classes>
