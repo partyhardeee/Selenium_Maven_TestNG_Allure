@@ -151,7 +151,6 @@ public class ProductPage {
         catch (NoSuchElementException e)
         {
             e.printStackTrace();
-            System.err.println("Dreamiz удален");
         }
     }
     @Step("Проверка того, что все товары удалены из корзины")
