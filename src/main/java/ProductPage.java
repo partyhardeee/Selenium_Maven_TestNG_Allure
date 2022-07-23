@@ -34,10 +34,10 @@ public class ProductPage {
     @FindBy(xpath = "/html[1]/body[1]/div[4]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/button[1]")
     private WebElement delall;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[4]/div[3]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[1]/div[1]/main[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/article[1]/div[5]/h3[1]/a[1]/span[1]")
+    @FindBy(xpath = "/html[1]/body[1]/div[4]/div[3]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[1]/div[1]/main[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/article[1]/div[5]/h3[1]/a[1]/span[1]")
     private WebElement firstpack;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[4]/div[3]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[1]/div[1]/main[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/article[1]/div[5]/h3[1]/a[1]/span[1]")
+    @FindBy(xpath = "/html[1]/body[1]/div[4]/div[3]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[1]/div[1]/main[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/article[1]/div[5]/h3[1]/a[1]/span[1]")
     private WebElement secondpack;
 
     @Step("Товар добавляется в сравнение")
@@ -50,17 +50,24 @@ public class ProductPage {
         catch (TimeoutException e)
         {
             wait.until(ExpectedConditions.visibilityOf(compare));
+            compare.click();
         }
         catch (NoSuchElementException e){
             wait.until(ExpectedConditions.visibilityOf(compare));
+            compare.click();
         }
     }
 
     @Step("Переход на страницу первого товара")
     public void firstPick(){
-
         Actions actions = new Actions(driver);
-        wait.until(ExpectedConditions.visibilityOf(firstpack));
+        try {
+            wait.until(ExpectedConditions.visibilityOf(firstpack));
+        }
+        catch (TimeoutException e){
+            System.err.println("Локатор firstpack изменился");
+            driver.quit();
+        }
         actions.moveToElement(firstpack).build().perform();
         window1 = driver.getWindowHandle();
         wait.until(ExpectedConditions.visibilityOf(firstpack));
@@ -86,7 +93,13 @@ public class ProductPage {
     @Step("Выбор второго продукта из списка")
     public void secondPick(){
         Actions actions = new Actions(driver);
-        wait.until(ExpectedConditions.visibilityOf(secondpack));
+        try {
+            wait.until(ExpectedConditions.visibilityOf(secondpack));
+        }
+        catch (TimeoutException e){
+            System.err.println("Локатор secondpack изменился");
+            driver.quit();
+        }
         actions.moveToElement(secondpack).build().perform();
         secondpack.click();
 
@@ -118,6 +131,9 @@ public class ProductPage {
         String secint = secprice.replaceAll("[^0-9]+", "");
         int x = Integer.parseInt(firstint) + Integer.parseInt(secint);
         Assert.assertTrue(x < 700);
+        /*
+        Проверка отображения товаров на странице
+         */
         try {
             Assert.assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Dreamies')]")).isDisplayed());
             Assert.assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Деревенские лакомства')]")).isDisplayed());
