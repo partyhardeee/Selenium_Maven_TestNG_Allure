@@ -16,7 +16,7 @@ public class FilterPage {
 
         PageFactory.initElements(driver, this);
         this.driver = driver;
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 20);
 
     }
 
@@ -55,6 +55,7 @@ public class FilterPage {
         input.click();
         wait.until(ExpectedConditions.visibilityOf(zoo));
         actions.moveToElement(zoo).build().perform();
+        wait.until(ExpectedConditions.visibilityOf(lakomstva));
         lakomstva.click();
     }
 
@@ -63,24 +64,20 @@ public class FilterPage {
         Actions actions = new Actions(driver);
         wait.until(ExpectedConditions.visibilityOf(dreamiz));
         if  (dreamiz.isDisplayed()) {
-            actions.moveToElement(dreamiz).build().perform();
-            dreamiz.click();
+            actions.moveToElement(dreamiz).click().build().perform();
             }
         else {
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[.='Dreamies']//span[@class='_2XaWK']")));
-            actions.moveToElement(dreamiz).build().perform();
-            dreamiz.click();
+            actions.moveToElement(dreamiz).click().build().perform();
             }
             wait.until(ExpectedConditions.visibilityOf(pole1));
-            actions.moveToElement(pole1).build().perform();
-            pole1.click();
+            actions.moveToElement(pole1).click().build().perform();
             pole1.sendKeys(lowprice);
             pole2.click();
             pole2.sendKeys(highprice);
 
             wait.until(ExpectedConditions.visibilityOf(check));
-            actions.moveToElement(check).build().perform();
-            check.click();
+            actions.moveToElement(check).click().build().perform();
             Thread.sleep(2000);
     }
 
@@ -91,14 +88,12 @@ public class FilterPage {
         Чек бокс снимается с Dreamiz
          */
         wait.until(ExpectedConditions.visibilityOf(dreamiz));
-        actions.moveToElement(dreamiz).build().perform();
-        dreamiz.click();
+        actions.moveToElement(dreamiz).click().build().perform();
         /*
         Чек бокс проставляется на другого производителя
          */
         wait.until(ExpectedConditions.visibilityOf(checkveda));
-        actions.moveToElement(checkveda).build().perform();
-        checkveda.click();
+        actions.moveToElement(checkveda).click().build().perform();
         Thread.sleep(2000);
     }
 

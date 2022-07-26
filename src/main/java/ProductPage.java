@@ -47,12 +47,8 @@ public class ProductPage {
             actions.moveToElement(braveness).build().perform();
             braveness.click();
         }
-        catch (TimeoutException e)
+        catch (TimeoutException | NoSuchElementException e)
         {
-            wait.until(ExpectedConditions.visibilityOf(compare));
-            compare.click();
-        }
-        catch (NoSuchElementException e){
             wait.until(ExpectedConditions.visibilityOf(compare));
             compare.click();
         }
@@ -148,8 +144,7 @@ public class ProductPage {
     public void deletefBasket(){
         Actions actions = new Actions(driver);
         try {
-        actions.moveToElement(deleteitem).build().perform();
-        deleteitem.click();
+        actions.moveToElement(deleteitem).click().build().perform();
             }
         catch (NoSuchElementException e)
         {
@@ -160,15 +155,11 @@ public class ProductPage {
     @Step("Проверка того, что удаленного товара нет в корзине")
     public void checkOne(){
         try {
-            /*
-            Не понимаю почему assertFalse не работает, я думал что он должен проверить что элемента не отображен
-            Пришлось использовать try catch в таком виде, но наверно это не правильно
-             */
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//a[contains(text(),'Dreamies')]")));
             Assert.assertFalse(driver.findElement(By.xpath("//a[contains(text(),'Dreamies')]"))
                     .isDisplayed());
         }
-        catch (NoSuchElementException e)
+         catch (NoSuchElementException e)
         {
         }
     }
@@ -182,6 +173,5 @@ public class ProductPage {
     public void deleteAll(){
         Actions actions = new Actions(driver);
         wait.until(ExpectedConditions.visibilityOf(delall));
-        actions.moveToElement(delall).build().perform();
-        delall.click();
+        actions.moveToElement(delall).click().build().perform();
     }}
