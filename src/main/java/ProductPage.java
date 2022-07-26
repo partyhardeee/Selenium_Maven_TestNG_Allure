@@ -155,6 +155,10 @@ public class ProductPage {
     @Step("Проверка того, что удаленного товара нет в корзине")
     public void checkOne(){
         try {
+            /*
+            Не понимаю почему assertFalse не работает, ошибка #no_such_element
+            Пришлось использовать try catch в таком виде, но наверно это не правильно
+             */
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//a[contains(text(),'Dreamies')]")));
             Assert.assertFalse(driver.findElement(By.xpath("//a[contains(text(),'Dreamies')]"))
                     .isDisplayed());
